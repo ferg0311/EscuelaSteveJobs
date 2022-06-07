@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Primer grado </title>
+</head>
+<body>
+    <h1>Registro de notas </h1>
+    <h2>Educacion Fisica </h2>
+
+    <form id="RegistroForm">
+        <div class="formularioRegistro">
+            Trimestre
+            <input id="TriUno" type="radio" name="registroTrimestre" value="primero">
+            <label for="TriUno">Uno</label>
+
+            <input id="TriDos" type="radio" name="registroTrimestre" value="segundo">
+            <label for="TriDos">Dos</label>
+
+            <input id="TriTres" type="radio" name="registroTrimestre" value="tercero">
+            <label for="TriTres">Tres</label>
+        </div>
+
+        <div class="formularioRegistro">
+            <label for="registroName">Nombre</label>
+            <input id="registroName" name="registroName">
+        </div>
+
+        <div class="formularioRegistro">
+            <label for="registroApellido">
+                Apellido
+              </label>
+              <input id="registroApellido" name="registroApellido">
+        </div>
+
+        <div class="formularioRegistro">
+            <label for="registroNota1">Actividad #1</label>
+            <input id="registroNota1" name="registroNota1" >
+        </div>
+
+        <div class="formularioRegistro">
+            <label for="registroNota2">Actividad #2</label>
+            <input id="registroNota2" name="registroNota2" >
+        </div>
+
+        <div class="formularioRegistro">
+            <label for="registroNota3">Actividad #3</label>
+            <input id="registroNota3" name="registroNota3" >
+        </div>
+
+        <div class="formularioRegistro">
+            <label for="registroPromedio">Promedio</label>
+            <input id="registroPromedio" name="registroPromedio" >
+        </div>
+
+        <div class="formularioRegistro">
+            <button id="botonAgregar"> Agregar </button>
+        </div>
+    </form>
+
+    
+      <div class="tabla">
+        <table id="RegistroTable">
+            <tr>
+                <th>
+                    Trimestre
+                </th>
+
+                <th>
+                    Nombre
+                </th>
+
+                <th>
+                    Apellido
+                </th>
+
+                <th>
+                    Actividad #1
+                </th>
+
+                <th>
+                    Actividad #2
+                </th>
+
+                <th>
+                    Actividad #3
+                </th>
+
+                <th>
+                    Promedio
+                </th>    
+            </tr>
+
+           
+        </table>
+      </div>
+
+      <p><a href="LenguajePrimero.html">Lenguaje </a></p>
+      <p><a href="SocialesPrimero.html">Sociales </a></p>
+      <p><a href="CienciasPrimero.html">Ciencias </a></p>
+      <p><a href="InglesPrimero.html">Ingles </a></p>
+      <p><a href="primerGrado.html"> Matematicas </a></p>
+      <p><a href="administrador.html"> Volver</a></p>
+
+
+
+
+      <script>
+        const form = document.getElementById("RegistroForm");
+        form.addEventListener("submit", function(event){
+            event.preventDefault();
+            let RegistroFormData = new FormData(form)
+            let RegistroObj = convertFormDataToRegistroObj(RegistroFormData)
+            saveRegistroObj (RegistroObj)
+            insertRowRegistroTable(RegistroObj)
+
+        })
+
+        function convertFormDataToRegistroObj(RegistroFormData){
+
+          let registroTrimestre = RegistroFormData.get("registroTrimestre")
+          let registroName = RegistroFormData.get("registroName")
+          let registroApellido = RegistroFormData.get("registroApellido")
+          let registroNota1 = RegistroFormData.get("registroNota1")
+          let registroNota2 = RegistroFormData.get("registroNota2")
+          let registroNota3= RegistroFormData.get("registroNota3")
+          let registroPromedio = RegistroFormData.get("registroPromedio")
+          return {
+              "registroTrimestre": registroTrimestre,
+              "registroName": registroName,
+              "registroApellido": registroApellido,
+              "registroNota1" : registroNota1,
+              "registroNota2" : registroNota2,
+              "registroNota3" : registroNota3,
+              "registroPromedio" : registroPromedio
+
+           
+        }
+
+    }
+
+        function insertRowRegistroTable (RegistroObj){
+            let RegistroTableRef = document.getElementById("RegistroTable");
+
+            let newRegistroRowRef = RegistroTableRef.insertRow(-1);
+
+            let newRegistroCellRFef = newRegistroRowRef.insertCell(0);
+            newRegistroCellRFef.textContent = RegistroObj["registroTrimestre"];
+
+            newRegistroCellRFef = newRegistroRowRef.insertCell(1);
+            newRegistroCellRFef.textContent =  RegistroObj["registroName"];
+
+            newRegistroCellRFef = newRegistroRowRef.insertCell(2);
+            newRegistroCellRFef.textContent =  RegistroObj["registroApellido"];
+
+            newRegistroCellRFef = newRegistroRowRef.insertCell(3);
+            newRegistroCellRFef.textContent =  RegistroObj["registroNota1"];
+
+            newRegistroCellRFef = newRegistroRowRef.insertCell(4);
+            newRegistroCellRFef.textContent = RegistroObj["registroNota2"];
+
+            newRegistroCellRFef = newRegistroRowRef.insertCell(5);
+            newRegistroCellRFef.textContent =  RegistroObj["registroNota3"];
+
+            newRegistroCellRFef = newRegistroRowRef.insertCell(6);
+            newRegistroCellRFef.textContent =  RegistroObj["registroPromedio"];
+
+
+
+            
+      
+        }
+        
+        function saveRegistroObj(RegistroObj) {
+            let myRegistroArray = JSON.parse(localStorage.getItem("RegistroData")) || [];
+            myRegistroArray.push(RegistroObj);
+            let RegistroObjJSON = JSON.stringify(RegistroObj);
+            localStorage.setItem("RegistroData",RegistroObjJSON)
+
+        }
+      </script>
+
+     
+
+
+
+    <style>
+        th, td{
+            text-align: center;
+            padding: 10px;
+            border: solid black 2px;
+        }
+
+        .tabla table {
+            margin: 0% auto;
+        }
+
+        h1{
+            text-align: center;
+        }
+
+        h2{
+            text-align: center;
+        }
+
+        form{
+            text-align: center;
+        }
+
+        .formularioRegistro{
+            background-color: aliceblue;
+            padding-bottom: 20px;
+        }
+
+        #botonAgregar{
+           font-size: 15px;
+        }
+    </style>
+
+
+    
+    
+</body>
+</html>
